@@ -2,17 +2,17 @@
 
 A web-based implementation of the Tango (Tangly) logic puzzle game with an intelligent solver using Constraint Satisfaction Problem (CSP) techniques.
 
-## 🎮 Game Overview
+## Game Overview
 
-Tango is a visual logic puzzle where players must fill a 6×6 grid with sun ☀️ and moon 🌙 symbols following specific rules:
+Tango is a visual logic puzzle where players must fill a 6x6 grid with sun and moon symbols following specific rules:
 
 - Each row and column must contain exactly 3 suns and 3 moons
 - No more than 2 of the same symbol may appear consecutively (horizontally or vertically)
 - Cells connected by = must contain the same symbol
-- Cells connected by × must contain opposite symbols
+- Cells connected by X must contain opposite symbols
 - Each puzzle has one unique solution solvable through logical deduction
 
-## 🚀 Features
+## Features
 
 - **Interactive Gameplay**: Click to cycle through sun, moon, or empty cells
 - **Multiple Difficulty Levels**: Easy, Medium, and Hard puzzles
@@ -22,7 +22,7 @@ Tango is a visual logic puzzle where players must fill a 6×6 grid with sun ☀�
 - **Timer**: Track your solving time
 - **Responsive Design**: Works on desktop and mobile devices
 
-## 🛠️ Technology Stack
+## Technology Stack
 
 ### Frontend
 - React 18+ with Vite
@@ -36,7 +36,7 @@ Tango is a visual logic puzzle where players must fill a 6×6 grid with sun ☀�
 - Pydantic for data validation
 - Uvicorn ASGI server
 
-## 📦 Installation
+## Installation
 
 ### Prerequisites
 - Python 3.8+
@@ -85,7 +85,7 @@ npm run dev
 
 4. Open http://localhost:5173 in your browser
 
-## 🎯 Quick Start
+## Quick Start
 
 ### Using the provided scripts:
 
@@ -104,18 +104,18 @@ npm run dev
 python run_game.py
 ```
 
-## 🧩 How to Play
+## How to Play
 
 1. **Select Difficulty**: Choose from Easy, Medium, or Hard
-2. **Place Symbols**: Click cells to cycle through: empty → sun → moon → empty
+2. **Place Symbols**: Click cells to cycle through: empty -> sun -> moon -> empty
 3. **Follow the Rules**: 
    - Each row/column needs 3 suns and 3 moons
    - Avoid 3 consecutive identical symbols
-   - Respect = (same) and × (different) constraints
+   - Respect = (same) and X (different) constraints
 4. **Use Hints**: Click "Get Hint" if you're stuck
 5. **Complete the Puzzle**: Fill all cells correctly to win!
 
-## 🔧 API Documentation
+## API Documentation
 
 ### Endpoints
 
@@ -126,7 +126,7 @@ python run_game.py
 - `POST /api/solver/hint` - Get next logical move
 - `POST /api/solver/explain` - Get step-by-step explanation
 
-## 🧪 Testing
+## Testing
 
 ### Run all tests:
 ```bash
@@ -144,29 +144,29 @@ cd frontend
 npm test
 ```
 
-## 📂 Project Structure
+## Project Structure
 
 ```
 tango-puzzle/
-├── frontend/                # React frontend application
-│   ├── src/
-│   │   ├── components/     # UI components
-│   │   ├── hooks/          # Custom React hooks
-│   │   ├── services/       # API services
-│   │   └── utils/          # Utility functions
-│   └── public/             # Static assets
-├── backend/                 # FastAPI backend
-│   ├── app/
-│   │   ├── api/           # API routes and models
-│   │   ├── core/          # Core game logic
-│   │   └── solver/        # CSP solver implementation
-│   └── tests/             # Backend tests
-├── scripts/                # Utility scripts
-├── tests/                  # Integration tests
-└── docs/                   # Additional documentation
+|-- frontend/                # React frontend application
+|   |-- src/
+|   |   |-- components/     # UI components
+|   |   |-- hooks/          # Custom React hooks
+|   |   |-- services/       # API services
+|   |   `-- utils/          # Utility functions
+|   `-- public/             # Static assets
+|-- backend/                 # FastAPI backend
+|   |-- app/
+|   |   |-- api/           # API routes and models
+|   |   |-- core/          # Core game logic
+|   |   `-- solver/        # CSP solver implementation
+|   `-- tests/             # Backend tests
+|-- scripts/                # Utility scripts
+|-- tests/                  # Integration tests
+`-- docs/                   # Additional documentation
 ```
 
-## 🤝 Contributing
+## Contributing
 
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
@@ -174,22 +174,21 @@ tango-puzzle/
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-## 📄 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 👨‍💻 Author
+## Author
 
-**Jason Agung**  
-Final Year Project (Tugas Akhir/Skripsi)
+**Jason Agung**
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - Based on the Tangly puzzle from [tangly.org](https://www.tangly.org)
 - CSP solving techniques inspired by O'Sullivan & Horan's research
 - Explanation system based on Bogaerts et al.'s framework
 
-## 📚 References
+## References
 
 1. O'Sullivan, B., & Horan, J. - "Generating and Solving Logic Puzzles through Constraint Satisfaction"
 2. Bogaerts, B., et al. - "Step-wise Explaining How to Solve Constraint Satisfaction Problems"
