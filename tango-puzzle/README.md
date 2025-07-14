@@ -2,6 +2,14 @@
 
 A web-based implementation of the Tango (Tangly) logic puzzle game with an intelligent solver using Constraint Satisfaction Problem (CSP) techniques.
 
+## Motivation
+
+While Tango puzzles are available online (such as at tangly.org), there are very few automated solvers available for this puzzle type, particularly ones that use constraint satisfaction techniques. This implementation fills that gap by providing:
+- A complete CSP-based solver that can solve any valid Tango puzzle
+- Step-by-step explanations of the solving process
+- A puzzle generator that creates puzzles of varying difficulty
+- An educational tool for understanding constraint satisfaction problems
+
 ## Game Overview
 
 Tango is a visual logic puzzle where players must fill a 6x6 grid with sun and moon symbols following specific rules:

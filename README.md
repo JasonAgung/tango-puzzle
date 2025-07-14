@@ -1,6 +1,10 @@
 # Tango Logic Puzzle Game
 
-This repository contains a complete implementation of the Tango logic puzzle game with an intelligent solver.
+This repository contains a complete implementation of the Tango logic puzzle game with an intelligent solver using Constraint Satisfaction Problem (CSP) techniques.
+
+## Why This Project?
+
+While Tango puzzles exist online, automated solvers for this puzzle type are scarce, especially those utilizing constraint satisfaction approaches. This project addresses that gap by providing a comprehensive CSP-based solver with educational value for understanding constraint programming.
 
 ## Repository Structure
 
