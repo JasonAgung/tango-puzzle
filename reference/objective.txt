@@ -1,0 +1,33 @@
+Pembangunan Perangkat Lunak dan Penyelesaian Permainan Tango
+
+Latar Belakang
+	•	Permainan Tango (versi LinkedIn) atau Tangly (versi www.tangly.org) adalah sebuah permainan logika visual.
+	•	Diberikan sebuah grid berukuran 6 × 6, pemain harus menempatkan 3 buah simbol matahari dan 3 buah simbol bulan pada setiap baris dan setiap kolom, sehingga setiap grid akan ditempati oleh satu simbol bulan atau matahari.
+
+Latar Belakang (2)
+	•	Tidak boleh ada lebih dari dua buah simbol yang sama yang ditempatkan berturut-turut secara horizontal maupun vertikal.
+	•	Beberapa simbol tambahan juga diberikan, yaitu:
+	•	Simbol lawan (×)
+	•	Simbol sama (=)
+
+Latar Belakang (3)
+	•	Jika dua grid bersebelahan dikenai simbol lawan (×), maka kedua grid tersebut harus diisi dengan simbol yang berbeda.
+	•	Jika dua grid bersebelahan dikenai simbol sama (=), maka kedua grid tersebut harus diisi dengan simbol yang sama (misalnya bulan–bulan atau matahari–matahari).
+
+Latar Belakang (4)
+	•	Permainan ini menarik dan menantang, namun belum banyak ditemukan solver-nya.
+	•	Pada tugas akhir ini, mahasiswa akan:
+	•	Membuat permainan ini (termasuk antarmuka dan pembuatan puzzle)
+	•	Membuat solusi untuk setiap puzzle yang dibuat
+
+⸻
+
+Tugas Mahasiswa
+	1.	Mempelajari cara menyelesaikan permainan Tango dengan mencoba bermain secara mandiri, baik melalui:
+	•	Website: https://www.tangly.org
+	2.	Mempelajari strategi-strategi penyelesaian permainan Tango
+	3.	Melakukan analisis dan perancangan untuk membangun:
+	•	Perangkat lunak permainan Tango
+	•	Solver atau penyelesai permainan Tango
+	4.	Membangun perangkat lunak permainan dan solusinya
+	5.	Melakukan berbagai pengujian, misalnya dengan membandingkan solusi manual dan solusi komputer

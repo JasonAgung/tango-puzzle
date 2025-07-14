@@ -1,0 +1,286 @@
+.game-board-wrapper {
+  display: inline-block;
+  position: relative;
+}
+
+.game-board-container {
+  display: grid;
+  grid-template-columns: 30px 1fr;
+  grid-template-rows: 30px 1fr;
+  gap: 5px;
+  padding: 20px;
+  position: relative;
+}
+
+/* Board numbers styling */
+.board-numbers-top {
+  grid-column: 2;
+  grid-row: 1;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0 3px;
+}
+
+.board-numbers-left {
+  grid-column: 1;
+  grid-row: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  padding: 3px 0;
+}
+
+.board-number {
+  width: 60px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 500;
+  color: #666;
+  opacity: 0.7;
+}
+
+.game-board {
+  grid-column: 2;
+  grid-row: 2;
+  display: grid;
+  grid-template-columns: repeat(6, 60px);
+  grid-template-rows: repeat(6, 60px);
+  gap: 0;
+  background-color: #f0f0f0;
+  border: 3px solid #333;
+  position: relative;
+}
+
+/* Cell styles */
+.cell {
+  width: 60px;
+  height: 60px;
+  border: 1px solid #999;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 28px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.cell:hover {
+  background-color: #f5f5f5;
+  transform: scale(1.05);
+}
+
+.cell.sun {
+  background-color: #fff3cd;
+}
+
+.cell.moon {
+  background-color: #d1ecf1;
+}
+
+.cell.invalid {
+  background-color: #f8d7da;
+  border-color: #dc3545;
+}
+
+.cell.highlighted {
+  box-shadow: 0 0 0 3px #007bff;
+  z-index: 1;
+}
+
+/* Given cells (initial puzzle cells) */
+.cell.given {
+  font-weight: bold;
+  cursor: not-allowed;
+  position: relative;
+}
+
+.cell.given::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 6px;
+  height: 6px;
+  background-color: #666;
+  border-radius: 50%;
+  opacity: 0.5;
+}
+
+.cell.given:hover {
+  transform: none;
+  background-color: inherit;
+}
+
+/* Constraint styles */
+.constraint {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  background-color: white;
+  border: 2px solid #666;
+  border-radius: 50%;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Grid lines for visual separation */
+.cell:nth-child(3n) {
+  border-right: 2px solid #666;
+}
+
+.cell:nth-child(n+13):nth-child(-n+18) {
+  border-bottom: 2px solid #666;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .game-board {
+    grid-template-columns: repeat(6, 50px);
+    grid-template-rows: repeat(6, 50px);
+  }
+  
+  .cell {
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+  }
+  
+  .board-number {
+    width: 50px;
+    height: 25px;
+    font-size: 12px;
+  }
+  
+  .constraint {
+    font-size: 16px;
+  }
+  
+  .constraint.horizontal {
+    width: 25px;
+    height: 50px;
+    transform: translateX(-12.5px);
+  }
+  
+  .constraint.vertical {
+    width: 50px;
+    height: 25px;
+    transform: translateY(-12.5px);
+  }
+}
+
+/* Dark mode styles */
+body.dark-mode .game-board {
+  background-color: #1a1a1a;
+  border-color: #4a4a4a;
+}
+
+body.dark-mode .cell {
+  background-color: #2d2d2d;
+  border-color: #4a4a4a;
+  color: #e0e0e0;
+}
+
+body.dark-mode .cell:hover {
+  background-color: #3d3d3d;
+}
+
+body.dark-mode .cell.sun {
+  background-color: #4a4122;
+  color: #ffd700;
+}
+
+body.dark-mode .cell.moon {
+  background-color: #1e3a4c;
+  color: #87ceeb;
+}
+
+body.dark-mode .cell.invalid {
+  background-color: #4a1f1f;
+  border-color: #dc3545;
+}
+
+body.dark-mode .cell.highlighted {
+  background-color: #3a3a5a;
+}
+
+body.dark-mode .constraint {
+  background-color: #1a1a1a;
+  color: #e0e0e0;
+  border-color: #4a4a4a;
+}
+
+body.dark-mode .cell.given::after {
+  background-color: #888;
+}
+
+body.dark-mode .cell.given.sun {
+  background-color: #5a5133;
+}
+
+body.dark-mode .cell.given.moon {
+  background-color: #2e4a5c;
+}
+
+/* Single error indicator button */
+.error-info-button-main {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: #ff5252;
+  border: 2px solid white;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s ease;
+  z-index: 10;
+  animation: errorPulse 2s ease-in-out infinite;
+}
+
+@keyframes errorPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.error-info-button-main:hover {
+  background-color: #ff1744;
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.error-info-button-main svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Dark mode error indicator */
+body.dark-mode .error-info-button-main {
+  background-color: #d32f2f;
+  border-color: #2d2d2d;
+}
+
+body.dark-mode .error-info-button-main:hover {
+  background-color: #b71c1c;
+}
+
+/* Dark mode board numbers */
+body.dark-mode .board-number {
+  color: #999;
+}
+}

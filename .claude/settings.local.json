@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find:*)",
+      "Bash(mkdir:*)",
+      "Bash(python test:*)",
+      "Bash(python3 test:*)",
+      "Bash(touch:*)",
+      "Bash(npm create:*)",
+      "Bash(npm install)",
+      "Bash(sudo npm install:*)",
+      "Bash(rm:*)",
+      "Bash(npm cache clean:*)",
+      "Bash(chmod:*)",
+      "Bash(python3:*)",
+      "Bash(curl:*)",
+      "Bash(python:*)",
+      "Bash(lsof:*)",
+      "Bash(cd:*)",
+      "Bash(npm run dev:*)",
+      "Bash(mv:*)",
+      "Bash(true)"
+    ],
+    "deny": []
+  }
+}

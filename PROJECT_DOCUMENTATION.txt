@@ -1,0 +1,133 @@
+TANGO LOGIC PUZZLE GAME - PROJECT DOCUMENTATION
+==============================================
+
+1. PROJECT OVERVIEW
+-------------------
+This project implements a web-based Tango (Tangly) logic puzzle game with an intelligent solver. The system consists of a React.js frontend for the game interface and a Python FastAPI backend that handles puzzle generation, validation, and solving using Constraint Satisfaction Problem (CSP) techniques.
+
+2. GAME MECHANICS
+-----------------
+Tango is a 6x6 grid logic puzzle where players must:
+- Fill each cell with either a sun or moon symbol
+- Ensure each row and column contains exactly 3 suns and 3 moons
+- Avoid placing more than 2 consecutive identical symbols
+- Follow constraint indicators: = (same symbol) and × (opposite symbols)
+- Solve using pure logic without guessing
+
+3. SYSTEM ARCHITECTURE
+----------------------
+
+3.1 Frontend (React.js)
+- GameBoard Component: Renders the 6x6 grid with interactive cells
+- Cell Component: Handles individual cell states (empty/sun/moon)
+- Constraint Component: Displays = and × symbols between cells
+- Controls Component: Game actions (new game, check, hint, solve)
+- SolutionViewer: Shows step-by-step explanations
+- API Service: Communicates with backend endpoints
+
+3.2 Backend (Python/FastAPI)
+- Puzzle Generator: Creates valid puzzles with unique solutions
+- CSP Solver: Implements constraint satisfaction algorithms
+- Constraint Validator: Checks game rules compliance
+- Explanation Engine: Generates human-readable solution steps
+- Difficulty Analyzer: Grades puzzles based on solving complexity
+
+4. KEY ALGORITHMS
+-----------------
+
+4.1 CSP Formulation
+- Variables: 36 cells (6x6 grid)
+- Domain: {SUN, MOON} for each cell
+- Constraints:
+  - Row/Column sum constraints (3 suns, 3 moons)
+  - Consecutive limit constraints (max 2 in a row)
+  - Equality constraints (= symbols)
+  - Inequality constraints (× symbols)
+
+4.2 Solving Process
+1. Initial constraint propagation
+2. Arc consistency maintenance
+3. Forward checking
+4. Backtracking search with MRV heuristic
+5. Solution uniqueness verification
+
+4.3 Puzzle Generation
+1. Start with empty grid
+2. Add random valid assignments
+3. Apply CSP solver to complete
+4. Remove cells while maintaining unique solution
+5. Add constraint symbols strategically
+6. Verify difficulty level
+
+5. API ENDPOINTS
+----------------
+POST /api/puzzle/generate
+- Params: difficulty (easy/medium/hard)
+- Returns: puzzle grid with constraints
+
+GET /api/puzzle/{id}
+- Returns: specific puzzle data
+
+POST /api/puzzle/validate
+- Body: current board state
+- Returns: validation results and errors
+
+POST /api/solver/solve
+- Body: puzzle configuration
+- Returns: complete solution
+
+POST /api/solver/hint
+- Body: current state
+- Returns: next logical move with reasoning
+
+POST /api/solver/explain
+- Body: puzzle configuration
+- Returns: step-by-step solution explanation
+
+6. DATA FLOW
+------------
+1. User requests new puzzle → Frontend calls generate endpoint
+2. Backend creates puzzle → Returns to frontend
+3. User places symbols → Frontend updates local state
+4. User requests validation → Frontend sends board to validate endpoint
+5. Backend checks constraints → Returns errors or success
+6. User requests hint → Backend analyzes current state
+7. Solver finds next move → Returns move with explanation
+8. User completes puzzle → Frontend displays success message
+
+7. KEY FEATURES
+---------------
+- Real-time constraint validation
+- Progressive hint system
+- Complete solution visualization
+- Step-by-step explanations
+- Multiple difficulty levels
+- Timer and score tracking
+- Responsive design for mobile/desktop
+
+8. TESTING STRATEGY
+-------------------
+- Unit tests for CSP algorithms
+- Integration tests for API endpoints
+- Frontend component testing
+- End-to-end puzzle solving tests
+- Performance tests for solver efficiency
+- Manual vs automated solution comparison
+
+9. DEPLOYMENT
+-------------
+- Frontend: Served via Nginx or CDN
+- Backend: Deployed with Uvicorn + Gunicorn
+- Database: Optional PostgreSQL for puzzle storage
+- Containerization: Docker Compose setup
+- Environment: Separate dev/staging/production configs
+
+10. FUTURE ENHANCEMENTS
+-----------------------
+- Multiplayer competitive mode
+- Daily challenge puzzles
+- User accounts and progress tracking
+- Puzzle editor for custom creation
+- Mobile app versions
+- Additional constraint types
+- Larger grid sizes (8x8, 10x10)

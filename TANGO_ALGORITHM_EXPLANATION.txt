@@ -1,0 +1,227 @@
+TANGO PUZZLE CSP SOLVER - DETAILED ALGORITHM EXPLANATION
+========================================================
+
+1. INTRODUCTION
+---------------
+The Tango puzzle solver uses Constraint Satisfaction Problem (CSP) techniques combined with Google's OR-Tools library to find solutions. The algorithm guarantees finding the unique solution through systematic constraint propagation and intelligent search strategies.
+
+2. CORE CONCEPTS
+----------------
+
+2.1 CSP FORMULATION
+- Variables: Each cell in the 6x6 grid is a variable
+- Domain: Each variable can be either 'sun' or 'moon' (binary domain)
+- Constraints: Rules that must be satisfied for a valid solution
+
+2.2 CONSTRAINT TYPES
+1. Row Constraints: Each row must have exactly 3 suns and 3 moons
+2. Column Constraints: Each column must have exactly 3 suns and 3 moons
+3. Consecutive Constraints: No more than 2 consecutive identical symbols
+4. Equal Constraints (=): Connected cells must have the same symbol
+5. Opposite Constraints (×): Connected cells must have different symbols
+
+3. ALGORITHM WORKFLOW
+---------------------
+
+3.1 INITIALIZATION PHASE
+```
+1. Create CSP model with 36 variables (6x6 grid)
+2. For each cell (i,j), create two binary variables:
+   - cells[(i,j,'sun')] = 1 if cell contains sun, 0 otherwise
+   - cells[(i,j,'moon')] = 1 if cell contains moon, 0 otherwise
+3. Add mutual exclusion: exactly one symbol per cell
+```
+
+3.2 CONSTRAINT ADDITION PHASE
+```
+1. Basic Constraints:
+   - For each cell: cells[(i,j,'sun')] + cells[(i,j,'moon')] = 1
+   
+2. Row Constraints:
+   - For each row i: Σ(cells[(i,j,'sun')] for j in 0..5) = 3
+   - For each row i: Σ(cells[(i,j,'moon')] for j in 0..5) = 3
+   
+3. Column Constraints:
+   - For each column j: Σ(cells[(i,j,'sun')] for i in 0..5) = 3
+   - For each column j: Σ(cells[(i,j,'moon')] for i in 0..5) = 3
+   
+4. Consecutive Constraints:
+   - For each horizontal triple (i,j), (i,j+1), (i,j+2):
+     cells[(i,j,'sun')] + cells[(i,j+1,'sun')] + cells[(i,j+2,'sun')] <= 2
+     cells[(i,j,'moon')] + cells[(i,j+1,'moon')] + cells[(i,j+2,'moon')] <= 2
+   - Similar for vertical triples
+   
+5. Special Constraints:
+   - Equal: cells[(i1,j1,symbol)] = cells[(i2,j2,symbol)] for all symbols
+   - Opposite: cells[(i1,j1,'sun')] = cells[(i2,j2,'moon')]
+```
+
+3.3 SOLVING PHASE
+```
+1. Apply initial values from puzzle
+2. Run OR-Tools CP-SAT solver
+3. Use constraint propagation to reduce search space
+4. Apply backtracking search when needed
+5. Return solution if found
+```
+
+4. CONSTRAINT PROPAGATION MECHANISM
+-----------------------------------
+
+4.1 ARC CONSISTENCY
+The solver maintains arc consistency through propagation:
+- When a cell value is determined, propagate effects to related cells
+- Update domain restrictions based on constraints
+- Continue until no more deductions possible
+
+4.2 PROPAGATION RULES
+1. **Row/Column Completion**: If a row has 3 suns, all empty cells become moons
+2. **Consecutive Prevention**: If two adjacent cells have same symbol, prevent third
+3. **Constraint Propagation**: Equal/opposite constraints immediately determine related cells
+4. **Domain Reduction**: Eliminate impossible values based on current state
+
+5. SOLUTION EXPLANATION GENERATION
+----------------------------------
+
+5.1 DEDUCTION HIERARCHY
+The solver applies rules in order of simplicity:
+1. Simple counting rules (row/column completion)
+2. Consecutive prevention rules
+3. Direct constraint rules (equal/opposite)
+4. Advanced deduction through constraint propagation
+
+5.2 STEP-BY-STEP PROCESS
+```python
+while grid has empty cells:
+    1. Try simple row/column deduction
+       - Count symbols in each row/column
+       - If count = 3, fill remaining with opposite
+       
+    2. Try consecutive rule
+       - Check if placing symbol creates 3-in-a-row
+       - Force opposite symbol if violation detected
+       
+    3. Try constraint rule
+       - Apply equal constraints: copy known values
+       - Apply opposite constraints: place opposite values
+       
+    4. Try advanced deduction
+       - Use constraint propagation
+       - Apply logical inference from multiple constraints
+```
+
+6. UNIQUENESS VERIFICATION
+--------------------------
+
+To ensure the puzzle has exactly one solution:
+```
+1. Find initial solution using CSP solver
+2. Add constraint: "Find different solution"
+   - At least one cell must differ from current solution
+3. Try to solve again
+4. If no second solution exists, puzzle is unique
+5. If second solution found, puzzle is ambiguous
+```
+
+7. HINT GENERATION
+------------------
+
+The hint system works by:
+1. Solving the complete puzzle internally
+2. Comparing current state with solution
+3. Finding the next logical deduction step
+4. Returning the move with human-readable explanation
+
+8. PERFORMANCE OPTIMIZATIONS
+----------------------------
+
+8.1 CONSTRAINT ORDERING
+- Add most restrictive constraints first
+- This prunes search space early
+
+8.2 VARIABLE ORDERING
+- Use Minimum Remaining Values (MRV) heuristic
+- Choose cells with fewest legal values first
+
+8.3 VALUE ORDERING
+- Try values that lead to more constraint satisfaction
+- Use frequency analysis from solved puzzles
+
+8.4 CACHING
+- Cache constraint evaluations
+- Store intermediate propagation results
+
+9. COMPLEXITY ANALYSIS
+----------------------
+
+9.1 TIME COMPLEXITY
+- Worst case: O(2^n) where n = number of empty cells
+- Average case: O(n²) with good propagation
+- Best case: O(n) for highly constrained puzzles
+
+9.2 SPACE COMPLEXITY
+- O(n²) for storing the grid
+- O(n) for constraint storage
+- O(n) for propagation queue
+
+10. ALGORITHM ADVANTAGES
+------------------------
+
+1. **Completeness**: Guaranteed to find solution if one exists
+2. **Optimality**: Finds the unique solution
+3. **Explainability**: Generates human-understandable steps
+4. **Efficiency**: Constraint propagation reduces search space
+5. **Flexibility**: Easy to add new constraint types
+
+11. IMPLEMENTATION DETAILS
+--------------------------
+
+11.1 OR-TOOLS INTEGRATION
+```python
+# Create model
+model = cp_model.CpModel()
+
+# Create variables
+cells = {}
+for i in range(6):
+    for j in range(6):
+        cells[(i,j,'sun')] = model.NewBoolVar(f'cell_{i}_{j}_sun')
+        cells[(i,j,'moon')] = model.NewBoolVar(f'cell_{i}_{j}_moon')
+
+# Add constraints
+model.Add(cells[(i,j,'sun')] + cells[(i,j,'moon')] == 1)
+
+# Solve
+solver = cp_model.CpSolver()
+status = solver.Solve(model)
+```
+
+11.2 SOLUTION EXTRACTION
+```python
+if status == cp_model.OPTIMAL:
+    for i in range(6):
+        for j in range(6):
+            if solver.Value(cells[(i,j,'sun')]) == 1:
+                grid[i][j] = 'sun'
+            else:
+                grid[i][j] = 'moon'
+```
+
+12. ERROR HANDLING
+------------------
+
+1. **No Solution**: Puzzle is over-constrained
+2. **Multiple Solutions**: Puzzle is under-constrained
+3. **Timeout**: Puzzle too complex (rare with 6x6 grid)
+4. **Invalid Input**: Malformed constraints or grid
+
+The algorithm handles these gracefully and returns appropriate error messages.
+
+13. FUTURE ENHANCEMENTS
+-----------------------
+
+1. **Parallel Solving**: Use multiple threads for faster solving
+2. **Learning**: Use ML to predict good variable/value ordering
+3. **Incremental Solving**: Reuse previous solutions for similar puzzles
+4. **Symmetry Breaking**: Detect and eliminate symmetric solutions
+5. **Custom Heuristics**: Develop Tango-specific search strategies
